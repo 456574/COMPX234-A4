@@ -141,3 +141,26 @@ def stress_test(host, port, num_clients=10, duration=30):
         thread.join(timeout=1.0)
     
     print("\nStress test completed")
+if __name__ == "__main__":
+    # Default configuration
+    HOST = "localhost"
+    PORT = 51234
+    
+    # Check if test files exist, generate if not
+    if not os.path.exists("requests/client1.txt"):
+        print("Generating test request files...")
+        generate_test_files()
+    
+    # Print test header
+    print("\n" + "="*70)
+    print("TUPLE SPACE CLIENT TEST SUITE")
+    print("="*70)
+    print(f"Server: {HOST}:{PORT}")
+    print(f"Request files: {len(os.listdir('requests'))} files in requests/ directory")
+    
+    # Execute test sequence
+    sequential_test(HOST, PORT)
+    parallel_test(HOST, PORT)
+    stress_test(HOST, PORT)
+    
+    print("\nAll tests completed successfully!")
