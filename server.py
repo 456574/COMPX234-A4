@@ -200,3 +200,22 @@ class TupleSpaceServer:
                 print(f"READs: {self.stats['reads']}, GETs: {self.stats['gets']}, PUTs: {self.stats['puts']}")
                 print(f"Errors: {self.stats['errors']}")
                 print("="*50 + "\n")
+if __name__ == "__main__":
+    import sys
+    # Validate command line arguments
+    if len(sys.argv) != 2:
+        print("Usage: python server.py <port>")
+        sys.exit(1)
+    
+    try:
+        port = int(sys.argv[1])
+        # Validate port range (50000-59999)
+        if not (50000 <= port <= 59999):
+            raise ValueError
+    except ValueError:
+        print("Port must be between 50000 and 59999")
+        sys.exit(1)
+    
+    # Create and start server
+    server = TupleSpaceServer(port)
+    server.start()
